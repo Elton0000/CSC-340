@@ -7,8 +7,7 @@
 #include <sstream>
 // TO DO 
 // add necessary include for your library
-#include "myLibrary.h"
-
+#include "myLibrary.cpp"
 
 using namespace std;
 
@@ -27,9 +26,9 @@ int main () {
 	-- REPEAT -- for as many test cases as <Number of tests>
 	*/
 	string testFileName = "test_cases.txt";
-
+ 
 	if (readTestCases(testFileName, testCases)){
-		
+
 		for (int i = 0; i < testCases.size(); i++){
 			testCase tc = testCases[i];
 
@@ -45,7 +44,8 @@ int main () {
 			// Sort the first k elements
 			std::sort(tc.inputNumbers.begin(), tc.inputNumbers.begin() + nonValueElements);
 			std::sort(tc.expectedNumbers.begin(), tc.expectedNumbers.begin() + nonValueElements);
-			
+
+
 			// for (int i = 0; i < nonValueElements; i++) {
 			for (int i = 0; i < tc.expectedNumbers.size(); i++) {
 				if (tc.inputNumbers[i] != tc.expectedNumbers[i]){
