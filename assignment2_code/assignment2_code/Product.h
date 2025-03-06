@@ -3,19 +3,26 @@
 // TO DO: #include all the standard libraries and your own libraries here
 #include <iostream>
 // To DO: define the class Product with the necessary functions' prototypes and data fields
-template <class T>
+
 class Product {
 private:
     std::string name;
     std::string description;
-    double rating;
-    int sellCount;
-    T itemType;
-    std::string targetAudience;
+    double rating = 0;
+    int sellCount = 0;
+public:
+    Product();
+    Product(std::string name, std::string description, double rating, int sellCount);
+    
+    std::string getName();
+    std::string getDescription();
+    double getRating();
+    int getSellCount();
 
-    public:
-        override
-        toString();
+    void setName(std::string name);
+    void setDescription(std::string description);
+    virtual void setInfo();
+    virtual bool repeatInfo();
 // This is a function that allows you to compare two products based on their name. 
 // You may directly include it in your class definition. 
 // You don't need to modify it but will have to put it inside your class. 

@@ -8,10 +8,14 @@
 #include "Node.h"
 #include <cstddef>
 
-
 // Assignment 2 functions -------------------------------------------
 // TO DO: implement the two functions here
-
+// bool appendK(const ItemType& newEntry, const int& k) {
+// 	return false;
+// }
+// Node<ItemType>* reverseFindKthItem(const int& k){
+	
+// }
 // ------------------------------------------------------------------
 
 template<class ItemType>

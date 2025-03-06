@@ -2,8 +2,16 @@
 #include <string>
 
 // TO DO: #include any other libraries you need
+#include "Amazon340.cpp"
 #include "Amazon340.h"
+#include "Vendor.cpp"
 #include "Vendor.h"
+#include "Product.cpp"
+#include "Product.h"
+#include "Goods.cpp"
+#include "Goods.h"
+#include "Media.cpp"
+#include "Media.h"
 
 using namespace std;
 
@@ -17,7 +25,7 @@ using namespace std;
 void displayVendorMenu(Vendor& vendor){
 	int vendorChoice = 0;
 	do {
-		cout << "\n Hi, "<< vendor.getUsername() <<", what would you like to do:\n"
+		cout << "\nHi, "<< vendor.getUsername() <<", what would you like to do:\n"
 		<< "1. Display Profile\n"
 		<< "2. Modify Password\n"
 		<< "3. Create Product\n"
@@ -29,20 +37,24 @@ void displayVendorMenu(Vendor& vendor){
 		<< "0. Logout\n"
 		<< "Choice: ";
 		cin >> vendorChoice;
+		std::cout << "\n";
 
 		switch (vendorChoice) {
 			case 1:{
 				// TO DO: display vendor's profile information
 				//      : e.g. vendor.displayProfile();
+				vendor.displayInfo();
 				break;
 			}
 			case 2: {
 				// TO DO: ask for new password and update vendor's password
+				vendor.changePasswordCheck();
 				break;
 			}
 			case 3: {
 				// TO DO: ask vendor to choose product type, then ask them to input product details.
 				// Create the product and add it to the vendor's products
+				vendor.createProd();
 				break;
 			}
 			case 4:{
@@ -91,19 +103,21 @@ void displayVendorMenu(Vendor& vendor){
 
 
 int main(){
+	
 	// Instantiating the program using the default constructor
 	// With this implementation, the application will only have one vendor
 	Amazon340 amazon340; 
 
-	cout << "\n Welcome to Amazon340:" << endl;
+	cout << "\nWelcome to Amazon340!" << endl;
 	// TO DO: Ask the vendor to enter their information 
 	//        Instantiate a new Vendor object
-
-
+	Vendor myVendor;
+	myVendor.setupProfile();
+	
 	// call amazon340 createVendor function 
 	// replace /*...*/ with the right parameters
-	amazon340.createVendor(/*...*/);
-
+	amazon340.createVendor(myVendor.getUsername(), myVendor.getEmail(), myVendor.getPassword(), myVendor.getBio(), myVendor.getProfilePicDirectory());
+	
 	// Retrieve the vendor 
 	Vendor currentVendor = amazon340.getVendor();
 
