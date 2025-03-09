@@ -50,7 +50,7 @@ void Vendor::createProd(){
 		this->productList.add(media);
 	}
 	
-	if (tryAgain(1)) {
+	if (tryAgain(1)) { //exception handling method
 		std::cout << "\n";
 		createProd();
 	}
@@ -66,8 +66,8 @@ void Vendor::displayAllProd(){ //idea is to loop through bag and use repeatInfo 
 
 void Vendor::displayProd(){
 	displayProductNames();
-	int index = getIndexChoice(1);
-	this->productList.reverseFindKthItem(index)->getItem()->displayContent();
+	int index = getIndexChoice(1); //less lines of code, this appears quite a bit
+	this->productList.reverseFindKthItem(index)->getItem()->displayContent(); // find the point I want, then display contents
 		if (tryAgain(2)) {
 			displayProd();
 		}
@@ -94,7 +94,7 @@ void Vendor::sellProd(){
 void Vendor::deleteProd(){
 	displayProductNames();
 	int index = getIndexChoice(4);
-	if (this->productList.remove(this->productList.reverseFindKthItem(index)->getItem())) {
+	if (this->productList.remove(this->productList.reverseFindKthItem(index)->getItem())) { //deletes nodes at specified index, frees up memory, relinks nodes
 		std::cout << "Successful Removal\n";
 	}
 	else {
@@ -191,7 +191,7 @@ void Vendor::modPassword(){
 }
 
 void Vendor::displayProductNames(){
-	std::vector<Product*> display = getProductList().toVector();
+	std::vector<Product*> display = getProductList().toVector(); // just so i don't need to deal with node class and roundabout way of displaying info
 	std::string nameList = "[";
 	for (int i = 0; i < this->productList.getCurrentSize(); i++) {
 		if (i + 1 == this->productList.getCurrentSize()) {

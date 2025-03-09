@@ -44,7 +44,7 @@ Node<ItemType>* LinkedBag<ItemType>::reverseFindKthItem(const int& k){ //returns
 	else {
 		Node<ItemType>* currentNode = headPtr;
 		int counter = 0;	
-		while (counter < k && currentNode != nullptr) {
+		while (counter < k && currentNode != nullptr) { // standard iteration of linked list until at desired item
 			currentNode = currentNode->getNext();
 			counter++;
 		}

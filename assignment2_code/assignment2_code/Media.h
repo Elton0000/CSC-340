@@ -18,7 +18,7 @@ public:
 
     void setInfo() override;
     void displayContent() override;
-    void sell() override;
+    void sell() override; //Polymorphism
     
 private:
     bool repeatInfo() override;

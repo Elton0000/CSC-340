@@ -19,7 +19,7 @@ class Vendor {
         Vendor ();
         Vendor(std::string username, std::string email, std::string password, std::string bio, std::string profilePic);
 
-        void displayVendorMenu(Vendor& vendor);
+        void displayVendorMenu(Vendor& vendor); // in main method
         void displayInfo();
 
     public:

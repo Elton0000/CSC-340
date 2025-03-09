@@ -17,7 +17,7 @@ void Amazon340::createVendor(const std::string& username, const std::string& ema
 	vendor.setEmail(email);
 	vendor.setPassword(password);
 	vendor.setBio(bio);
-	vendor.setProfilePicDirectory(profilePicture);
+	vendor.setProfilePicDirectory(profilePicture); //To fit with structure of main file, need to use setters on the vendor in the constructor
 }
 Vendor Amazon340::getVendor() const{
 	// TO DO: implement function

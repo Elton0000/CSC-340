@@ -54,7 +54,7 @@ void Goods::setInfo() {
             if (std::cin.fail()) {
                 std::cout << "Invalid input for quantity, default amount: 0 is set.\n";
                 std::cin.clear();
-                std::cin.ignore();
+                std::cin.ignore(); //exception handling
             }
         this->setQuantity(quantity);
         satisfied = repeatInfo();
@@ -83,12 +83,12 @@ void Goods::sell() {
         }
         else {
             std::cout << "Invalid input, please try again: "; 
-        }
+        } //exception handling
         std::cin >> sellAmount;
     }
     setQuantity(getQuantity() - sellAmount);
     setRating(sellAmount);
-    setSellCount(sellAmount);
+    setSellCount(sellAmount);//adjusting rating and sell count as items are sold
     std::cout << "Sale completed!\n\n";
 }
 
