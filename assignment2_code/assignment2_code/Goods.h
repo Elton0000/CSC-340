@@ -16,6 +16,7 @@ public:
     void setInfo() override;
     void setExpirationDate(std::string expirationDate);
     void setQuantity(int quantity);
+    void displayContent() override;
 };
 
 #endif

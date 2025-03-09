@@ -36,6 +36,9 @@ void Product::setInfo() {
 bool Product::repeatInfo(){
 	return false;
 }
+void Product::displayContent() {
+
+}
 // ------------------------------------------------------------------------------
 // Operator overloading implementation
 bool Product::operator==(const Product& otherProduct) const {

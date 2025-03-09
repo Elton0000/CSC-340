@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include "myLibrary.h"
-#include "testing.cpp"
  
 int removeValue(std::vector<int>& numbers, int value) {
 int numOccurrences = 0; //To keep track of each occurrence of value

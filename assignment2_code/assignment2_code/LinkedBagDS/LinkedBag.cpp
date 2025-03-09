@@ -7,15 +7,49 @@
 #include "LinkedBag.h"
 #include "Node.h"
 #include <cstddef>
-
+#include <iostream> //Not initially here
 // Assignment 2 functions -------------------------------------------
 // TO DO: implement the two functions here
-// bool appendK(const ItemType& newEntry, const int& k) {
-// 	return false;
-// }
-// Node<ItemType>* reverseFindKthItem(const int& k){
-	
-// }
+template<class ItemType>
+bool LinkedBag<ItemType>::appendK(const ItemType& newEntry, const int& k) { //adds the element to the Kth position in the LinkedBag. If K is out of range, add to the end.
+	if (k < 0) {
+		std::cout << "Index out of bounds.\n";
+	}
+	else if (k > getCurrentSize()) {
+		this->add(newEntry);
+	}
+	else {
+		Node<ItemType>* newNode = new Node(newEntry);
+		Node<ItemType>* currentNode = headPtr;
+		Node<ItemType>* currentNextNode = currentNode->getNext();
+		int counter = 0;
+		while (counter < k && currentNextNode != nullptr) {
+			currentNode = currentNextNode;
+			currentNextNode = currentNextNode->getNext();
+			counter++;
+		}
+		currentNode = newNode;
+		newNode.setNext() = currentNextNode;
+	}
+	return false;
+}
+
+template<class ItemType>
+Node<ItemType>* LinkedBag<ItemType>::reverseFindKthItem(const int& k){ //returns a pointer to the kth element from the and of the LinkedBag.
+	if (k < 0 && k > this->getCurrentSize()) {
+		std::cout << "Index out of bounds.\n";
+		return nullptr;
+	}
+	else {
+		Node<ItemType>* currentNode = headPtr;
+		int counter = 0;	
+		while (counter < k && currentNode != nullptr) {
+			currentNode = currentNode->getNext();
+			counter++;
+		}
+		return currentNode;
+	}
+}
 // ------------------------------------------------------------------
 
 template<class ItemType>
@@ -71,19 +105,18 @@ bool LinkedBag<ItemType>::isEmpty() const{
 
 template<class ItemType>
 int LinkedBag<ItemType>::getCurrentSize() const{
-	return itemCount;
+	return itemCount; 
 }  // end getCurrentSize
 
 template<class ItemType>
 bool LinkedBag<ItemType>::add(const ItemType& newEntry){
 	// Add to beginning of chain: new node references rest of chain;
-	// (headPtr is null if chain is empty)		  
+	// (headPtr is null if chain is empty)
 	Node<ItemType>* nextNodePtr = new Node<ItemType>();
 	nextNodePtr->setItem(newEntry);
 	nextNodePtr->setNext(headPtr);  // New node points to chain
 	headPtr = nextNodePtr;			// New node is now first node
 	itemCount++;
-	
 	return true;
 }  // end add
 
@@ -172,7 +205,8 @@ template<class ItemType>
 Node<ItemType>* LinkedBag<ItemType>::getPointerTo(const ItemType& anEntry) const{
 	bool found = false;
 	Node<ItemType>* curPtr = headPtr;
-	
+	//  std::cout << "head pointer address: " << headPtr;
+	//  std::cout << "\nThe entry's address: " << anEntry;
 	while (!found && (curPtr != nullptr)){
 		if (anEntry == curPtr->getItem())
 			found = true;

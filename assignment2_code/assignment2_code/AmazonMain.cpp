@@ -38,7 +38,7 @@ void displayVendorMenu(Vendor& vendor){
 		<< "Choice: ";
 		cin >> vendorChoice;
 		std::cout << "\n";
-
+		
 		switch (vendorChoice) {
 			case 1:{
 				// TO DO: display vendor's profile information
@@ -60,12 +60,18 @@ void displayVendorMenu(Vendor& vendor){
 			case 4:{
 				// TO DO: display all vendor's products
 				//        You may re-use code from class demo
+				vendor.displayAllProd();
 				break;
 			}
 			case 5: {
 				// TO DO: ask the vendor for a value k
 				// Find the Kth product, if k > Linked Bag size, 
 				//    return an error message that includes the size of the Linked Bag
+				if (vendor.getProductList().isEmpty()) {
+					std::cout << "You do not have any items to display. Please add some products and try again.\n";
+					break;
+				}
+				vendor.displayProd();
 				break;
 			}
 			case 6: {
@@ -74,6 +80,11 @@ void displayVendorMenu(Vendor& vendor){
 				// Modify the product accordingly. 
 				// If index > Linked Bag size, 
 				//    return an error message that includes the size of the Linked Bag
+				if (vendor.getProductList().isEmpty()) {
+					std::cout << "You do not have any items to modify. Please add some products and try again.\n";
+					break;
+				}
+				vendor.modProd();	
 				break;
 			}
 			case 7: {
@@ -81,6 +92,11 @@ void displayVendorMenu(Vendor& vendor){
 				// Find the product, then sell the product. 
 				// If index > LinkedBag size, 
 				//    return an error message that includes the size of the Linked Bag
+				if (vendor.getProductList().isEmpty()) {
+					std::cout << "You do not have any items to sell. Please add some products and try again.\n";
+					break;
+				}
+				vendor.sellProd(5,5);
 				break;
 			}
 			case 8:{
@@ -102,12 +118,11 @@ void displayVendorMenu(Vendor& vendor){
 }
 
 
-int main(){
-	
+int main(){	
 	// Instantiating the program using the default constructor
 	// With this implementation, the application will only have one vendor
 	Amazon340 amazon340; 
-
+	
 	cout << "\nWelcome to Amazon340!" << endl;
 	// TO DO: Ask the vendor to enter their information 
 	//        Instantiate a new Vendor object
@@ -120,7 +135,7 @@ int main(){
 	
 	// Retrieve the vendor 
 	Vendor currentVendor = amazon340.getVendor();
-
+	
 	// Display the main menu
 	displayVendorMenu(currentVendor);
 				

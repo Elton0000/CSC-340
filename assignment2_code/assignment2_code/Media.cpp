@@ -79,3 +79,11 @@ bool Media::repeatInfo(){
                                             
 return satisfaction;
 }
+void Media::displayContent() {
+    std::cout << "\nDisplaying info of current Media\nName: " << this->getName()
+                                                << "\nDescription: " << this->getDescription()
+                                                << "\nRating(increases as items are sold): " << this->getRating()
+                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
+                                                << "\nType: " << this->getType()
+                                                << "\nTarget Audience: " << this->getTargetAudience() << "\n";
+}

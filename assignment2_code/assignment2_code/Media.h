@@ -19,6 +19,7 @@ public:
     void setInfo() override;
     void setType(std::string type);
     void setTargetAudience(std::string targetAudience);
+    void displayContent() override;
 };
 
 #endif

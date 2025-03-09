@@ -46,9 +46,10 @@ void Goods::setInfo() {
             if (std::cin.fail()) {
                 std::cout << "Invalid input for quantity, default amount: 0 is set.\n";
                 std::cin.clear();
+                std::cin.ignore();
             }
         this->setQuantity(quantity);
-
+        
         satisfied = repeatInfo();
     }
 }
@@ -81,4 +82,12 @@ bool Goods::repeatInfo(){
     }  
                                             
 return satisfaction;
+}
+void Goods::displayContent() {
+    std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
+                                                << "\nDescription: " << this->getDescription()
+                                                << "\nRating(increases as items are sold): " << this->getRating()
+                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
+                                                << "\nExpiration Date: " << this->getExpirationDate()
+                                                << "\nQuantity to be Sold: " << this->getQuantity() << "\n";
 }

@@ -27,12 +27,6 @@ std::cout << "Bio: " << this->getBio() << "\n";
 std::cout << "Profile Picture: " << this->getProfilePicDirectory() << "\n";
 }
 
-void Vendor::modPassword(){
-	std::string newPassword;
-	std::cin >> newPassword;
-	this->setPassword(newPassword);
-}
-
 void Vendor::createProd(){
 // TO DO: ask vendor to choose product type, then ask them to input product details.
 // Create the product and add it to the vendor's products
@@ -44,37 +38,86 @@ void Vendor::createProd(){
 		std::cout << "Invalid product type.\nPlease enter the type of product you wish to add (Goods or Media): ";
 		std::cin >> type;
 	}
-
 	if (type == "Goods") {
 		Goods* goods = new Goods();
 		(*goods).setInfo();
-		this->getProductList().add(goods);
-		
-		std::cout << this->getProductList().contains(goods); 
+		this->productList.add(goods);
 	}
 	else {
 		Media* media = new Media();
 		(*media).setInfo();
-		this->getProductList().add(media);
-		
-		std::cout << this->getProductList().isEmpty();
+		this->productList.add(media);
+	}
+	std::cout << "Would you like to add another item? (y,n): ";
+	std::string choice;
+	std::cin >> choice;
+	if (choice == "y") {
+		std::cout << "\n";
+		createProd();
 	}
 }
 
-void Vendor::displayAllProd(){
-
+void Vendor::displayAllProd(){ //idea is to loop through bag and use repeatInfo method on each "Product" item
+	//No way to actually access first node, have to convert to a vector first?
+	if (this->productList.isEmpty()) {
+		std::cout<< "No recorded items. Please add to the display first.\n";
+	}
+	else {
+		std::vector<Product*> display = getProductList().toVector();
+		for (int i = 0; i < this->productList.getCurrentSize(); i++) {
+		(*display[i]).displayContent();
+		}
+	}
 }
 
-void Vendor::displayProd(int index){
-
+void Vendor::displayProd(){
+	displayProductNames();
+	std::cout << "Input the index of the item you would like to view (leftmost is index 0): ";
+	int index;
+	std::cin >> index;
+	while (std::cin.fail()) {
+		std::cout << "\nInvalid input, please enter a number: ";
+		std::cin.clear();
+		std::cin.ignore();
+		std::cin >> index;
+	}
+	if (index >= this->productList.getCurrentSize() || index < 0) {
+		std::cout << "Index out of bounds. Please try again.\n";
+	}
+	else {	
+		std::vector<Product*> myList = getProductList().toVector();
+		(*myList[index]).displayContent();
+	}
 }
 
-void Vendor::modProd(Product& productToMod){
+void Vendor::modProd(){
+	displayProductNames();
+	std::cout << "Input the index of the item you would like to modify (leftmost is index 0): ";
+	int index;
+	std::cin >> index;
+	while (std::cin.fail()) {
+		std::cout << "\nInvalid input, please enter a number: ";
+		std::cin.clear();
+		std::cin.ignore();
+		std::cin >> index;
+	}
+
+	if (index >= this->productList.getCurrentSize() || index < 0) {
+		std::cout << "Index out of bounds. Please try again.\n";
+	}
+
+	else {
+		
+		std::vector<Product*> myList = getProductList().toVector();
+		(*myList[index]).setInfo();
+	}
 
 }
 
 void Vendor::sellProd(int index, int howMany){
-
+	int rex;
+	std::cin >> rex;
+	std::cout << (*(this->productList.reverseFindKthItem(rex))).getItem()->getName();
 }
 
 void Vendor::deleteProd(){
@@ -138,7 +181,7 @@ return this->profilePic;
 }
 
 LinkedBag<Product*> Vendor::getProductList() const{
-	return this->productList;
+	return productList;
 }
 
 void Vendor::setUsername(std::string username){
@@ -161,6 +204,25 @@ void Vendor::setProfilePicDirectory(std::string directory){
 this->profilePic = directory;
 }
 
+void Vendor::modPassword(){
+	std::string newPassword;
+	std::cin >> newPassword;
+	this->setPassword(newPassword);
+}
+
+void Vendor::displayProductNames(){
+	std::vector<Product*> display = getProductList().toVector();
+	std::string nameList = "[";
+	for (int i = 0; i < this->productList.getCurrentSize(); i++) {
+		if (i + 1 == this->productList.getCurrentSize()) {
+			nameList += ((*display[i]).getName() + "]");
+		}
+		else {
+			nameList += ((*display[i]).getName() + ", ");
+		}
+	}
+	std::cout << nameList << "\n";
+}
 // Operator == overloading implementation
 bool Vendor::operator==(const Vendor& otherVendor) const {
 	return (Vendor::username == otherVendor.username) && (Vendor::email == otherVendor.email);

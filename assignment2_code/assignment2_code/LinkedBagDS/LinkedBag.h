@@ -29,7 +29,7 @@ public:
 
 	// Assignment 2 functions -------------------------------------------
 	bool appendK(const ItemType& newEntry, const int& k);
-	Node<ItemType>* findKthItem(const int& indexK) const;
+	Node<ItemType>* reverseFindKthItem(const int& k);
 	// ------------------------------------------------------------------
 	
 	int getCurrentSize() const;

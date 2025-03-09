@@ -12,7 +12,8 @@ class Vendor {
         std::string password;
         std::string bio;
         std::string profilePic;
-        LinkedBag<Product*> productList; 
+        LinkedBag<Product*> productList;
+         
         
     public:
         Vendor ();
@@ -21,14 +22,16 @@ class Vendor {
         void displayInfo();
     private:
         void modPassword();
+        void displayProductNames();
+
     public:
         void createProd();
         void displayAllProd();
-        void displayProd(int index);
-        void modProd(Product& productToMod);
+        void displayProd();
+        void modProd();
         void sellProd(int index, int howMany);
         void deleteProd(); //asked by client to implement
-
+        
         void changePasswordCheck();
         void setupProfile();
         std::string getUsername() const;
