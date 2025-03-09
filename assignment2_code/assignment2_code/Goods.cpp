@@ -4,20 +4,28 @@
 #include "Product.h"
 
 Goods::Goods() {
-Product();
+    Product();
 }
 Goods::Goods(std::string name, std::string description, double rating, int sellCount, std::string expirationDate, int quantity) {
-Product(name,description,rating,sellCount);
-this->expirationDate = expirationDate;
-this->quantity = quantity;
+    Product(name,description,rating,sellCount);
+    this->expirationDate = expirationDate;
+    this->quantity = quantity;
 }
 
-std::string Goods::getExpirationDate(){
+std::string Goods::getExpirationDate() const{
     return this->expirationDate;
 }
 
-int Goods::getQuantity(){
+int Goods::getQuantity() const{
     return this->quantity;
+}
+
+void Goods::setExpirationDate(std::string expirationDate) {
+    this->expirationDate = expirationDate;
+}
+
+void Goods::setQuantity(int quantity){
+    this->quantity = quantity;
 }
 
 void Goods::setInfo() {
@@ -49,17 +57,39 @@ void Goods::setInfo() {
                 std::cin.ignore();
             }
         this->setQuantity(quantity);
-        
         satisfied = repeatInfo();
     }
 }
 
-void Goods::setExpirationDate(std::string expirationDate) {
-this->expirationDate = expirationDate;
+void Goods::displayContent() {
+    std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
+                                                << "\nDescription: " << this->getDescription()
+                                                << "\nRating(increases as items are sold): " << this->getRating()
+                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
+                                                << "\nExpiration Date: " << this->getExpirationDate()
+                                                << "\nQuantity to be Sold: " << this->getQuantity() << "\n";
 }
 
-void Goods::setQuantity(int quantity){
-this->quantity = quantity;
+void Goods::sell() {
+    displayContent();
+    std::cout << "\nHow many units would you like to sell [" << getQuantity() << "]: ";
+    int sellAmount;
+    std::cin >> sellAmount;
+    while (std::cin.fail() || sellAmount > getQuantity()) {
+        std::cin.clear();
+        std::cin.ignore();
+        if (sellAmount > getQuantity()) {
+            std::cout << "Only " << getQuantity() << " available, please select a smaller number: ";
+        }
+        else {
+            std::cout << "Invalid input, please try again: "; 
+        }
+        std::cin >> sellAmount;
+    }
+    setQuantity(getQuantity() - sellAmount);
+    setRating(sellAmount);
+    setSellCount(sellAmount);
+    std::cout << "Sale completed!\n\n";
 }
 
 bool Goods::repeatInfo(){
@@ -82,12 +112,4 @@ bool Goods::repeatInfo(){
     }  
                                             
 return satisfaction;
-}
-void Goods::displayContent() {
-    std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
-                                                << "\nDescription: " << this->getDescription()
-                                                << "\nRating(increases as items are sold): " << this->getRating()
-                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
-                                                << "\nExpiration Date: " << this->getExpirationDate()
-                                                << "\nQuantity to be Sold: " << this->getQuantity() << "\n";
 }

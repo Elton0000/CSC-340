@@ -21,10 +21,12 @@ public:
 
     void setName(std::string name);
     void setDescription(std::string description);
+    void setRating(int amount);
+    void setSellCount(int amount);
     virtual void setInfo();
     virtual bool repeatInfo();
     virtual void displayContent();
-    //virtual void modifyProduct();
+    virtual void sell();
 // This is a function that allows you to compare two products based on their name. 
 // You may directly include it in your class definition. 
 // You don't need to modify it but will have to put it inside your class. 

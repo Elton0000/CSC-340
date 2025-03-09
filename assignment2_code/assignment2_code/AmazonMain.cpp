@@ -60,6 +60,10 @@ void displayVendorMenu(Vendor& vendor){
 			case 4:{
 				// TO DO: display all vendor's products
 				//        You may re-use code from class demo
+				if (vendor.getProductList().isEmpty()) {
+					std::cout << "You do not have any items to display. Please add some products and try again.\n";
+					break;
+				}
 				vendor.displayAllProd();
 				break;
 			}
@@ -96,7 +100,7 @@ void displayVendorMenu(Vendor& vendor){
 					std::cout << "You do not have any items to sell. Please add some products and try again.\n";
 					break;
 				}
-				vendor.sellProd(5,5);
+				vendor.sellProd();
 				break;
 			}
 			case 8:{
@@ -104,6 +108,11 @@ void displayVendorMenu(Vendor& vendor){
 				// Find the product, then remove it from the list. 
 				// If index > LinkedBag size, 
 				//    return an error message that includes the size of the Linked Bag
+				if (vendor.getProductList().isEmpty()) {
+					std::cout << "You do not have any items to delete. Please add some products and try again.\n";
+					break;
+				}
+				vendor.deleteProd();
 				break;
 			}
 			case 0: {
@@ -135,7 +144,7 @@ int main(){
 	
 	// Retrieve the vendor 
 	Vendor currentVendor = amazon340.getVendor();
-	
+
 	// Display the main menu
 	displayVendorMenu(currentVendor);
 				

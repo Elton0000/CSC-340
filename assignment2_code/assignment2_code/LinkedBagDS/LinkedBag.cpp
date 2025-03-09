@@ -21,15 +21,16 @@ bool LinkedBag<ItemType>::appendK(const ItemType& newEntry, const int& k) { //ad
 	else {
 		Node<ItemType>* newNode = new Node(newEntry);
 		Node<ItemType>* currentNode = headPtr;
-		Node<ItemType>* currentNextNode = currentNode->getNext();
+		Node<ItemType>* currentNextNode = currentNode->getNext(); //The idea is that I need to be on the node I want to attach myself to, and the next node
 		int counter = 0;
 		while (counter < k && currentNextNode != nullptr) {
 			currentNode = currentNextNode;
-			currentNextNode = currentNextNode->getNext();
+			currentNextNode = currentNextNode->getNext(); //traverse list until desired index
 			counter++;
 		}
-		currentNode = newNode;
-		newNode.setNext() = currentNextNode;
+		currentNode->setNext(newNode); //Assuming that attaching to the end of index, not swapping positions
+							   //By appending, I assume if someone wants to append to index 2, the item that is appended is actually index 3
+		newNode.setNext() = currentNextNode; //reattaching links
 	}
 	return false;
 }

@@ -4,13 +4,13 @@
 #include "Product.h"
 
 Media::Media() {
-Product();
+    Product();
 }
 
 Media::Media (std::string name, std::string description, double rating, int sellCount, std::string type, std::string targetAudience) {
-Product(name,description,rating,sellCount);
-this->type = type;
-this->targetAudience = targetAudience;
+    Product(name,description,rating,sellCount);
+    this->type = type;
+    this->targetAudience = targetAudience;
 }
 
 std::string Media::getType(){
@@ -19,6 +19,14 @@ std::string Media::getType(){
 
 std::string Media::getTargetAudience(){
     return this->targetAudience;
+}
+
+void Media::setType(std::string type) {
+    this->type = type;
+}
+
+void Media::setTargetAudience(std::string target){
+    this->targetAudience = target;
 }
 
 void Media::setInfo() {
@@ -50,12 +58,23 @@ void Media::setInfo() {
     }
 }
 
-void Media::setType(std::string type) {
-this->type = type;
+void Media::displayContent() {
+    std::cout << "\nDisplaying info of current Media\nName: " << this->getName()
+                                                << "\nDescription: " << this->getDescription()
+                                                << "\nRating(increases as items are sold): " << this->getRating()
+                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
+                                                << "\nType: " << this->getType()
+                                                << "\nTarget Audience: " << this->getTargetAudience() << "\n";
 }
-
-void Media::setTargetAudience(std::string target){
-this->targetAudience = target;
+void Media::sell() {
+    displayContent();
+    std::cout << "\nPlease provide an access code to complete the sale: ";
+    std::string accessCode;
+    std::cin >> accessCode;
+    
+    setRating(1);
+    setSellCount(1);
+    std::cout << "Sale completed!\n\n";
 }
 
 bool Media::repeatInfo(){
@@ -69,7 +88,7 @@ bool Media::repeatInfo(){
                                                 << "\nIs this all correct? (y,n): ";
     std::string answer;
     std::cin >> answer;
-
+    
     if (answer == "y") {
         satisfaction = true; 
     }
@@ -78,12 +97,4 @@ bool Media::repeatInfo(){
     }  
                                             
 return satisfaction;
-}
-void Media::displayContent() {
-    std::cout << "\nDisplaying info of current Media\nName: " << this->getName()
-                                                << "\nDescription: " << this->getDescription()
-                                                << "\nRating(increases as items are sold): " << this->getRating()
-                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
-                                                << "\nType: " << this->getType()
-                                                << "\nTarget Audience: " << this->getTargetAudience() << "\n";
 }

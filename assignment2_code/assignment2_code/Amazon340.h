@@ -13,6 +13,7 @@ class Amazon340 {
 	public:
 		Amazon340();
 		~Amazon340();
+		
 		void createVendor(const std::string& username, const std::string& email, const std::string& password, const std::string& bio, const std::string& profilePicture);
 		Vendor getVendor() const;
 };

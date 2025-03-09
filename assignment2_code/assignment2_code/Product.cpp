@@ -24,19 +24,39 @@ double Product::getRating(){
 int Product::getSellCount() {
 	return this->sellCount;
 }
+
 void Product::setName(std::string name) {
 	this->name = name;
 }
+
 void Product::setDescription(std::string description){
 	this->description = description;
 }
+
 void Product::setInfo() {
 
 }
+void Product::setRating(int amount) {
+	this->rating += (amount * 0.02);
+
+	if (this->rating > 5) {
+		this->rating = 5;
+	}
+}
+
+void Product::setSellCount(int amount) {
+	this->sellCount += amount;
+}
+
 bool Product::repeatInfo(){
 	return false;
 }
+
 void Product::displayContent() {
+
+}
+
+void Product::sell() {
 
 }
 // ------------------------------------------------------------------------------
