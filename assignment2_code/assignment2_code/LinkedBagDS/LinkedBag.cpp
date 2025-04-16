@@ -8,21 +8,28 @@
 #include "Node.h"
 #include <cstddef>
 #include <iostream> //Not initially here
+#include <memory>
 // Assignment 2 functions -------------------------------------------
 // TO DO: implement the two functions here
 template<class ItemType>
 bool LinkedBag<ItemType>::appendK(const ItemType& newEntry, const int& k) { //adds the element to the Kth position in the LinkedBag. If K is out of range, add to the end.
+	Node<ItemType>* newNode = new Node(newEntry);
+	Node<ItemType>* currentNode = headPtr;
+	Node<ItemType>* currentNextNode = currentNode->getNext(); //The idea is that I need to be on the node I want to attach myself to, and the next node
+	bool flag = false;
+	int counter = 0;
+
 	if (k < 0) {
 		std::cout << "Index out of bounds.\n";
 	}
 	else if (k > getCurrentSize()) {
-		this->add(newEntry);
+		while (currentNode->getNext() != nullptr ) {
+			currentNode = currentNode->getNext();
+		}
+		currentNode->setNext(newNode);
+		flag = true;
 	}
 	else {
-		Node<ItemType>* newNode = new Node(newEntry);
-		Node<ItemType>* currentNode = headPtr;
-		Node<ItemType>* currentNextNode = currentNode->getNext(); //The idea is that I need to be on the node I want to attach myself to, and the next node
-		int counter = 0;
 		while (counter < k && currentNextNode != nullptr) {
 			currentNode = currentNextNode;
 			currentNextNode = currentNextNode->getNext(); //traverse list until desired index
@@ -31,8 +38,9 @@ bool LinkedBag<ItemType>::appendK(const ItemType& newEntry, const int& k) { //ad
 		currentNode->setNext(newNode); //Assuming that attaching to the end of index, not swapping positions
 							   //By appending, I assume if someone wants to append to index 2, the item that is appended is actually index 3
 		newNode.setNext() = currentNextNode; //reattaching links
+		flag = true;
 	}
-	return false;
+	return flag;
 }
 
 template<class ItemType>

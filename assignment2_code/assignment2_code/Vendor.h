@@ -3,6 +3,7 @@
 // TO DO: #include all the standard libraries and your own libraries here
 #include "LinkedBagDS/LinkedBag.h"
 #include "Product.h"
+#include <memory>
 
 // To DO: define the class Vendor with the necessary functions and data fields
 class Vendor {
@@ -12,17 +13,16 @@ class Vendor {
         std::string password;
         std::string bio;
         std::string profilePic;
-        LinkedBag<Product*> productList;
+        LinkedBag<std::shared_ptr<Product>> productList;
          
         
     public:
-        Vendor ();
+        Vendor();
         Vendor(std::string username, std::string email, std::string password, std::string bio, std::string profilePic);
-
+        // Vendor(const Vendor& vendor);
         void displayVendorMenu(Vendor& vendor); // in main method
         void displayInfo();
 
-    public:
         void createProd();
         void displayAllProd();
         void displayProd();
@@ -37,14 +37,16 @@ class Vendor {
         std::string getPassword() const;
         std::string getBio() const;
         std::string getProfilePicDirectory() const;
-        LinkedBag<Product*> getProductList() const;
+        LinkedBag<std::shared_ptr<Product>> getProductList() const;
 
         void setUsername(std::string username);
         void setEmail(std::string email);
         void setPassword(std::string password);
         void setBio(std::string bio);
         void setProfilePicDirectory(std::string directory);
-        
+        friend std::ostream& operator<<(std::ostream& oS, const Vendor& vendor);
+        friend std::istream& operator>>(std::istream& iS, Vendor& vendor);
+        Vendor& operator=(const Vendor& rhs);
     private:
         void modPassword();
         void displayProductNames();

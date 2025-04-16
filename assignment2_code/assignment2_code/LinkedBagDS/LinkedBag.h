@@ -9,7 +9,7 @@
 
 #include "BagInterface.h"
 #include "Node.h"
-
+#include <memory>
 template<class ItemType>
 class LinkedBag : public BagInterface<ItemType>
 {

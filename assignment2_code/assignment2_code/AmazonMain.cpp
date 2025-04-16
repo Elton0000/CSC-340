@@ -132,16 +132,16 @@ int main(){
 	// With this implementation, the application will only have one vendor
 	Amazon340 amazon340; 
 	
-	cout << "\nWelcome to Amazon340!" << endl;
+	cout << amazon340 << endl;
 	// TO DO: Ask the vendor to enter their information 
 	//        Instantiate a new Vendor object
+	
 	Vendor myVendor;
 	myVendor.setupProfile();
-	
 	// call amazon340 createVendor function 
 	// replace /*...*/ with the right parameters
-	amazon340.createVendor(myVendor.getUsername(), myVendor.getEmail(), myVendor.getPassword(), myVendor.getBio(), myVendor.getProfilePicDirectory());
 	
+	amazon340.createVendor(myVendor.getUsername(), myVendor.getEmail(), myVendor.getPassword(), myVendor.getBio(), myVendor.getProfilePicDirectory());
 	// Retrieve the vendor 
 	Vendor currentVendor = amazon340.getVendor();
 

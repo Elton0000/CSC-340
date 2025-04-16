@@ -2,7 +2,6 @@
 #define Amazon340_h
 //#include "LinkedBagDS/LinkedBag.h"
 // TO DO include necessary libraries
-#include <iostream>
 #include "Vendor.h" 
 
 // This class only contains a vendor

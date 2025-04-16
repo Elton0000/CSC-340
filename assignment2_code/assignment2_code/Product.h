@@ -13,16 +13,17 @@ private:
 public:
     Product();
     Product(std::string name, std::string description, double rating, int sellCount);
+    ~Product();
     
-    std::string getName();
-    std::string getDescription();
-    double getRating();
-    int getSellCount();
+    std::string getName() const;
+    std::string getDescription() const;
+    double getRating() const;
+    int getSellCount() const;
 
     void setName(std::string name);
     void setDescription(std::string description);
     void setRating(int amount);
-    void setSellCount(int amount);
+    void setSellCount(int amount) ;
     virtual void setInfo();
     virtual bool repeatInfo();
     virtual void displayContent();

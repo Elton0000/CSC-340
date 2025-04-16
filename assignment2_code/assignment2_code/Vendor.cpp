@@ -6,7 +6,7 @@
 #include "Product.h"
 #include "Goods.h"
 #include "Media.h"
-
+#include <memory>
 // TO DO: function implementations
 Vendor::Vendor () {
 
@@ -20,11 +20,33 @@ Vendor::Vendor(std::string username, std::string email, std::string password, st
 	this->profilePic = profilePic;
 }
 
+// Vendor::Vendor(const Vendor& vendor) {
+// // 	: username(vendor.username),
+// // 	  email(vendor.email),
+// // 	  password(vendor.password),
+// // 	  bio(vendor.bio),
+// // 	  profilePic(vendor.profilePic)
+
+
+// }
+
+//copy constructor
+Vendor& Vendor::operator=(const Vendor& rhs) {
+	this->username = rhs.getUsername();
+	this->password = rhs.getPassword();
+	this->email = rhs.getEmail();
+	this->bio = rhs.getBio();
+	this->profilePic = rhs.getProfilePicDirectory();
+	return *this;
+}
+
 void Vendor::displayInfo() {
-std::cout << "Username: " << this->getUsername() << "\n";
-std::cout << "Email: " << this->getEmail() << "\n";
-std::cout << "Bio: " << this->getBio() << "\n";
-std::cout << "Profile Picture: " << this->getProfilePicDirectory() << "\n";
+std::cout << (*this);
+
+// std::cout << "Username: " << this->getUsername() << "\n";
+// std::cout << "Email: " << this->getEmail() << "\n";
+// std::cout << "Bio: " << this->getBio() << "\n";
+// std::cout << "Profile Picture: " << this->getProfilePicDirectory() << "\n";
 }
 
 void Vendor::createProd(){
@@ -40,14 +62,25 @@ void Vendor::createProd(){
 	}
 
 	if (type == "Goods") {
-		Goods* goods = new Goods();
-		(*goods).setInfo();
-		this->productList.add(goods);
+		
+		
+		std::shared_ptr<Goods> goodsPtr = std::make_shared<Goods>();
+		goodsPtr -> setInfo();
+		productList.add(goodsPtr);
+	
+		// Goods* goodsPtr = new Goods();
+		// (*goodsPtr).setInfo();
+		// this->productList.add(goodsPtr);
 	}
 	else {
-		Media* media = new Media();
-		(*media).setInfo();
-		this->productList.add(media);
+
+		std::shared_ptr<Media> mediaPtr = std::make_shared<Media>();
+		mediaPtr -> setInfo();
+		productList.add(mediaPtr);
+			
+		// Media* media = new Media();
+		// (*media).setInfo();
+		// this->productList.add(mediaPtr);
 	}
 	
 	if (tryAgain(1)) { //exception handling method
@@ -58,7 +91,7 @@ void Vendor::createProd(){
 
 void Vendor::displayAllProd(){ //idea is to loop through bag and use repeatInfo method on each "Product" item
 	//No way to actually access first node, have to convert to a vector first?
-		std::vector<Product*> display = getProductList().toVector();
+		std::vector<std::shared_ptr<Product>> display = getProductList().toVector(); 
 		for (int i = 0; i < this->productList.getCurrentSize(); i++) {
 		(*display[i]).displayContent();
 		}
@@ -124,20 +157,25 @@ void Vendor::changePasswordCheck() {
 }
 
 void Vendor::setupProfile(){
-	std::cout << "Please enter your name: ";
-	std::getline(std::cin,this->username);
 
-	std::cout << "Please enter your email: "; 
-	std::getline(std::cin,this->email);
+	std :: cin >> (*this);
+	
+	
+	
+	// std::cout << "Please enter your name: ";
+	// std::getline(std::cin,this->username);
 
-	std::cout << "Please enter a password: "; 
-	std::getline(std::cin,this->password);
+	// std::cout << "Please enter your email: "; 
+	// std::getline(std::cin,this->email);
 
-	std::cout << "Please tell us a bit about yourself: "; 
-	std::getline(std::cin,this->bio);
+	// std::cout << "Please enter a password: "; 
+	// std::getline(std::cin,this->password);
 
-	std::cout<<	"Please enter a directory to your image of choice: "; 
-	std::cin >> this->profilePic;
+	// std::cout << "Please tell us a bit about yourself: "; 
+	// std::getline(std::cin,this->bio);
+
+	// std::cout<<	"Please enter a directory to your image of choice: "; 
+	// std::cin >> this->profilePic;
 }
 
 std::string Vendor::getUsername() const {
@@ -160,7 +198,7 @@ std::string Vendor::getProfilePicDirectory() const {
 	return this->profilePic;
 }
 
-LinkedBag<Product*> Vendor::getProductList() const{
+LinkedBag<std::shared_ptr<Product>> Vendor::getProductList() const{
 	return productList;
 }
 
@@ -191,7 +229,7 @@ void Vendor::modPassword(){
 }
 
 void Vendor::displayProductNames(){
-	std::vector<Product*> display = getProductList().toVector(); // just so i don't need to deal with node class and roundabout way of displaying info
+	std::vector<std::shared_ptr<Product>> display = getProductList().toVector(); // just so i don't need to deal with node class and roundabout way of displaying info
 	std::string nameList = "[";
 	for (int i = 0; i < this->productList.getCurrentSize(); i++) {
 		if (i + 1 == this->productList.getCurrentSize()) {
@@ -235,6 +273,7 @@ bool Vendor::tryAgain(int x) {
 	std::cin >> choice;
 	return choice == "y";
 }
+
 int Vendor::getIndexChoice(int x) {
 	int choice;
 	switch (x) {
@@ -276,4 +315,38 @@ int Vendor::getIndexChoice(int x) {
 // Operator == overloading implementation
 bool Vendor::operator==(const Vendor& otherVendor) const {
 	return (Vendor::username == otherVendor.username) && (Vendor::email == otherVendor.email);
+}
+
+std::ostream& operator<<(std::ostream& out,const Vendor& vendor) { //overloading 
+	out << "Username: " << vendor.getUsername() << "\n";
+	out << "Email: " << vendor.getEmail() << "\n";
+	out << "Bio: " << vendor.getBio() << "\n";
+	out << "Profile Picture: " << vendor.getProfilePicDirectory() << "\n";                                        
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Vendor& vendor) { //overloading
+    std::string answer;
+    std::cout << "Please enter your name: ";
+	in >> answer;
+	vendor.setUsername(answer);
+
+	std::cout << "Please enter your email: "; 
+	in >> answer;
+	vendor.setEmail(answer);
+
+	std::cout << "Please enter a password: "; 
+	in >> answer;
+	vendor.setPassword(answer);
+
+	std::cout << "Please tell us a bit about yourself: "; 
+	in >> answer;
+	vendor.setBio(answer);
+
+	std::cout<<	"Please enter a directory to your image of choice: "; 
+	in >> answer;
+	vendor.setProfilePicDirectory(answer);
+
+	return in;
+    
 }

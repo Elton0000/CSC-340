@@ -13,11 +13,20 @@ Media::Media (std::string name, std::string description, double rating, int sell
     this->targetAudience = targetAudience;
 }
 
-std::string Media::getType(){
+Media::Media(const Media& media) {
+	std::shared_ptr myMedia = std::make_shared<Media>();
+	*myMedia = media;
+}
+
+Media::~Media() {
+
+}
+
+std::string Media::getType() const {
     return this->type;
 }
 
-std::string Media::getTargetAudience(){
+std::string Media::getTargetAudience() const {
     return this->targetAudience;
 }
 
@@ -59,12 +68,14 @@ void Media::setInfo() {
 }
 
 void Media::displayContent() {
-    std::cout << "\nDisplaying info of current Media\nName: " << this->getName()
-                                                << "\nDescription: " << this->getDescription()
-                                                << "\nRating(increases as items are sold): " << this->getRating()
-                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
-                                                << "\nType: " << this->getType()
-                                                << "\nTarget Audience: " << this->getTargetAudience() << "\n";
+    std::cout << (*this);
+    
+    // std::cout << "\nDisplaying info of current Media\nName: " << this->getName()
+    //                                             << "\nDescription: " << this->getDescription()
+    //                                             << "\nRating(increases as items are sold): " << this->getRating()
+    //                                             << "\nSell Count(increases as items are sold): " << this->getSellCount()
+    //                                             << "\nType: " << this->getType()
+    //                                             << "\nTarget Audience: " << this->getTargetAudience() << "\n";
 }
 void Media::sell() {
     displayContent();
@@ -79,22 +90,49 @@ void Media::sell() {
 
 bool Media::repeatInfo(){
     bool satisfaction = false;
-    std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
-                                                << "\nDescription: " << this->getDescription()
-                                                << "\nRating(increases as items are sold): " << this->getRating()
-                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
-                                                << "\nType: " << this->getType()
-                                                << "\nTarget Audience: " << this->getTargetAudience()
-                                                << "\nIs this all correct? (y,n): ";
-    std::string answer;
-    std::cin >> answer;
+    std::string tempName = (*this).getName();
     
-    if (answer == "y") {
-        satisfaction = true; 
+    std::cout << (*this);
+    std::cin >> (*this);
+    
+    if ((*this).getName() == "y") {
+        (*this).setName(tempName);
+        satisfaction = true;
     }
-    else {
-        satisfaction = false;
-    }  
+    // std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
+    //                                             << "\nDescription: " << this->getDescription()
+    //                                             << "\nRating(increases as items are sold): " << this->getRating()
+    //                                             << "\nSell Count(increases as items are sold): " << this->getSellCount()
+    //                                             << "\nType: " << this->getType()
+    //                                             << "\nTarget Audience: " << this->getTargetAudience()
+    //                                             << "\nIs this all correct? (y,n): ";
+    // std::string answer;
+    // std::cin >> answer;
+    
+    // if (answer == "y") {
+    //     satisfaction = true; 
+    // }
+    // else {
+    //     satisfaction = false;
+    // }  
                                             
 return satisfaction;
+}
+std::ostream& operator<<(std::ostream& out,const Media& media) { //overloading 
+    out << "\nDisplaying info of current goods\nName: " << media.getName()
+                                                << "\nDescription: " << media.getDescription()
+                                                << "\nRating(increases as items are sold): " << media.getRating()
+                                                << "\nSell Count(increases as items are sold): " << media.getSellCount()
+                                                << "\nType: " << media.getType()
+                                                << "\nTarget Audience: " << media.getTargetAudience();                   
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Media& media) { //overloading
+    std::string answer;
+    std :: cout << "\nIs this all correct (y, n):  ";
+    in >> answer;
+    media.setName(answer);
+    return in;
+    
 }

@@ -6,10 +6,20 @@
 Goods::Goods() {
     Product();
 }
+
 Goods::Goods(std::string name, std::string description, double rating, int sellCount, std::string expirationDate, int quantity) {
     Product(name,description,rating,sellCount);
     this->expirationDate = expirationDate;
     this->quantity = quantity;
+}
+
+Goods::Goods(const Goods& goods)  {
+	std::shared_ptr myGoods = std::make_shared<Goods>();
+	*myGoods = goods;
+}
+
+Goods::~Goods() {
+
 }
 
 std::string Goods::getExpirationDate() const{
@@ -62,12 +72,13 @@ void Goods::setInfo() {
 }
 
 void Goods::displayContent() {
-    std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
-                                                << "\nDescription: " << this->getDescription()
-                                                << "\nRating(increases as items are sold): " << this->getRating()
-                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
-                                                << "\nExpiration Date: " << this->getExpirationDate()
-                                                << "\nQuantity to be Sold: " << this->getQuantity() << "\n";
+    // std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
+    //                                             << "\nDescription: " << this->getDescription()
+    //                                             << "\nRating(increases as items are sold): " << this->getRating()
+    //                                             << "\nSell Count(increases as items are sold): " << this->getSellCount()
+    //                                             << "\nExpiration Date: " << this->getExpirationDate()
+    //                                             << "\nQuantity to be Sold: " << this->getQuantity() << "\n";
+    std::cout << (*this);
 }
 
 void Goods::sell() {
@@ -93,23 +104,60 @@ void Goods::sell() {
 }
 
 bool Goods::repeatInfo(){
+    std::string tempName = (*this).getName();
     bool satisfaction = false;
-    std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
-                                                << "\nDescription: " << this->getDescription()
-                                                << "\nRating(increases as items are sold): " << this->getRating()
-                                                << "\nSell Count(increases as items are sold): " << this->getSellCount()
-                                                << "\nExpiration Date: " << this->getExpirationDate()
-                                                << "\nQuantity to be Sold: " << this->getQuantity()
-                                                << "\nIs this all correct? (y,n): ";
-    std::string answer;
-    std::cin >> answer;
-
-    if (answer == "y") {
-        satisfaction = true; 
+    
+    std::cout << (*this);
+    std::cin >> (*this);
+    
+    if ((*this).getName() == "y") {
+        (*this).setName(tempName);
+        satisfaction = true;
     }
-    else {
-        satisfaction = false;
-    }  
+    
+    // std::cout << "\nDisplaying info of current goods\nName: " << this->getName()
+    //                                             << "\nDescription: " << this->getDescription()
+    //                                             << "\nRating(increases as items are sold): " << this->getRating()
+    //                                             << "\nSell Count(increases as items are sold): " << this->getSellCount()
+    //                                             << "\nExpiration Date: " << this->getExpirationDate()
+    //                                             << "\nQuantity to be Sold: " << this->getQuantity()
+    //                                             << "\nIs this all correct? (y,n): ";
+    // std::string answer;
+    // std::cin >> answer;
+    
+    // if (answer == "y") {
+    //     satisfaction = true; 
+    // }
+    // else {
+    //     satisfaction = false;
+    // }
+
+    // if (std::cin >> (*this)) {
+    //     satisfaction = true; 
+    // }
+    // else {
+    //     satisfaction = false;
+    // }                                    
+    // return satisfaction;
+    return satisfaction;
+}
+
+std::ostream& operator<<(std::ostream& out,const Goods& goods) { //overloading 
+    out << "\nDisplaying info of current goods\nName: " << goods.getName()
+                                                << "\nDescription: " << goods.getDescription()
+                                                << "\nRating(increases as items are sold): " << goods.getRating()
+                                                << "\nSell Count(increases as items are sold): " << goods.getSellCount()
+                                                << "\nExpiration Date: " << goods.getExpirationDate()
+                                                << "\nQuantity to be Sold: " << goods.getQuantity();
                                             
-return satisfaction;
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Goods& goods) { //overloading
+    std::string answer;
+    std :: cout << "\nIs this all correct (y, n):  ";
+    in >> answer;
+    goods.setName(answer);
+    return in;
+    
 }

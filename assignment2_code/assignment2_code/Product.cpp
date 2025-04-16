@@ -5,23 +5,29 @@
 Product::Product() {
 
 }
+
+
 Product::Product(std::string name, std::string description, double rating, int sellCount){
 
 }
 
-std::string Product::getName(){
+Product::~Product() {
+
+}
+
+std::string Product::getName() const{
 	return this->name;
 }
 
-std::string Product::getDescription(){
+std::string Product::getDescription() const{
 	return this->description;
 }
 
-double Product::getRating(){
+double Product::getRating() const{
 	return this->rating;
 }
 
-int Product::getSellCount() {
+int Product::getSellCount() const{
 	return this->sellCount;
 }
 

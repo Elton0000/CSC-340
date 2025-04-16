@@ -11,7 +11,8 @@ private:
 public:
     Goods();
     Goods(std::string name, std::string description, double rating, int sellCount, std::string expirationDate, int quantity);
-
+    Goods(const Goods& goods);
+    ~Goods();
     std::string getExpirationDate() const;
     int getQuantity() const;
     void setExpirationDate(std::string expirationDate);
@@ -20,6 +21,9 @@ public:
     void setInfo() override;
     void displayContent() override;
     void sell() override; //Polymorphism
+
+    friend std::ostream& operator<<(std::ostream& oS, const Goods& goods);
+    friend std::istream& operator>>(std::istream& iS, Goods& goods);
     
 private:
     bool repeatInfo() override;
